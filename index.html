@@ -153,5 +153,7 @@ window.addEventListener("hashchange",function(){window.scrollTo(0,0);render()});
 render();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 </body>
 </html>
