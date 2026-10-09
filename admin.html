@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دخول المدير | العلّامة</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #075c3c;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 15px 40px #0004;
+    }
+
+    h1 {
+      color: #075c3c;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #777;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #075c3c;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 16px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    a {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #075c3c;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <h1>العلّامة</h1>
+    <p>تسجيل دخول المدير</p>
+
+    <form id="adminForm">
+      <label for="password">كلمة مرور المدير</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="أدخل كلمة المرور"
+        autocomplete="current-password"
+        required
+      >
+      <button id="submitBtn" type="submit">تسجيل الدخول</button>
+      <div id="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <a href="index.html">العودة إلى الموقع</a>
+  </main>
+
+  <script>
+    const form = document.getElementById("adminForm");
+    const passwordInput = document.getElementById("password");
+    const button = document.getElementById("submitBtn");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.style.color = "#555";
+      message.textContent = "جارٍ التحقق...";
+      button.disabled = true;
+
+      try {
+        const response = await fetch(
+          "https://lxjyssvhtisitmczwnfo.supabase.co/functions/v1/admin-login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              password: passwordInput.value
+            })
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || result.success !== true) {
+          throw new Error(
+            response.status === 401
+              ? "كلمة المرور غير صحيحة"
+              : "تعذّر التحقق من الدخول. راجع إعدادات الاتصال."
+          );
+        }
+
+        message.style.color = "#075c3c";
+        message.textContent =
+          "تم التحقق بنجاح، لكن لوحة الإدارة لم تُربط بعد.";
+
+      } catch (error) {
+        message.style.color = "#b00020";
+        message.textContent =
+          error instanceof TypeError
+            ? "تعذّر الاتصال بالخادم. راجع الرابط وإعدادات الاتصال."
+            : error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+  </html>
+  
