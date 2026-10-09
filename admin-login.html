@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14532d">
+  <title>دخول المدير | العلّامة</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #f3f6f3;
+      font-family: Arial, sans-serif;
+      color: #183126;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 24px;
+      background: white;
+      border: 1px solid #e1e9e2;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px #163b2110;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 16px;
+      border-radius: 18px;
+      background: #14532d;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .subtitle {
+      margin: 0 0 28px;
+      text-align: center;
+      color: #66736a;
+      line-height: 1.8;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5ce;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #15803d;
+      box-shadow: 0 0 0 3px #15803d18;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #14532d;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 16px;
+      line-height: 1.7;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: #14532d;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="login-card">
+    <div class="logo" aria-hidden="true">ع</div>
+
+    <h1>دخول المدير</h1>
+
+    <p class="subtitle">
+      منصة العلّامة التعليمية
+      <br>
+      سجّل دخولك لإدارة المنصة.
+    </p>
+
+    <form id="adminForm">
+      <label for="password">كلمة مرور المدير</label>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="أدخل كلمة المرور"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="loginButton" type="submit">
+        تسجيل الدخول
+      </button>
+
+      <p id="message" role="status" aria-live="polite"></p>
+    </form>
+
+    <a class="back-link" href="index.html">
+      العودة إلى الصفحة الرئيسية
+    </a>
+  </main>
+
+  <script>
+    document
+      .getElementById("adminForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        document.getElementById("message").textContent =
+          "لم يتم تفعيل تسجيل الدخول بعد. أكمل إعداد الحماية أولًا.";
+
+      });
+  </script>
+</body>
+  </html>
+  
