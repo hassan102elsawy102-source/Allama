@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة إدارة العلّامة</title>
+  <style>
+    :root {
+      --green: #075c3c;
+      --light: #f3f6f4;
+      --border: #e2e8e4;
+      --text: #24352c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .topbar {
+      background: var(--green);
+      color: white;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar h1 { margin: 0; font-size: 23px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      min-height: calc(100vh - 65px);
+    }
+
+    aside {
+      background: white;
+      padding: 16px;
+      border-left: 1px solid var(--border);
+    }
+
+    .nav {
+      width: 100%;
+      display: block;
+      padding: 13px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      text-align: right;
+      cursor: pointer;
+      margin-bottom: 7px;
+      color: var(--text);
+    }
+
+    .nav.active, .nav:hover {
+      background: #e8f3ed;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    main { padding: 24px; min-width: 0; }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    h2 { margin-top: 0; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .card, .panel {
+      background: white;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .card span {
+      color: #65746b;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .card strong { font-size: 25px; color: var(--green); }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background: var(--green);
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 15px;
+      cursor: pointer;
+    }
+
+    .btn.secondary { background: #e8eee9; color: var(--green); }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4ddd7;
+      border-radius: 8px;
+      background: white;
+      margin: 7px 0 14px;
+    }
+
+    label { display: block; font-weight: bold; }
+
+    .table-wrap { overflow-x: auto; background: white; border-radius: 12px; }
+
+    table { width: 100%; border-collapse: collapse; min-width: 540px; }
+
+    th, td {
+      padding: 13px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+
+    th { background: #edf3ef; }
+
+    .notice {
+      background: #fff8e7;
+      border: 1px solid #eedca9;
+      border-radius: 10px;
+      padding: 13px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    #status { margin-top: 12px; line-height: 1.7; }
+
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: 1fr; }
+      aside {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        border-left: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav { white-space: nowrap; width: auto; }
+      main { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <h1>العلّامة | لوحة الإدارة</h1>
+    <a href="index.html" style="color:white">العودة للموقع</a>
+  </header>
+
+  <div class="layout">
+    <aside aria-label="أقسام الإدارة">
+      <button class="nav active" data-section="home">الرئيسية</button>
+      <button class="nav" data-section="courses">الكورسات</button>
+      <button class="nav" data-section="lessons">الدروس</button>
+      <button class="nav" data-section="students">الطلاب</button>
+      <button class="nav" data-section="settings">إعدادات الموقع</button>
+    </aside>
+
+    <main>
+      <div class="notice">
+        هذه واجهة الإدارة الأولية. لن تُحفظ التغييرات ولن تتغير صلاحيات الطلاب
+        قبل ربط الأقسام بقاعدة بيانات Supabase وتأمين عمليات المدير.
+      </div>
+
+      <section class="section active" id="home">
+        <h2>الرئيسية</h2>
+        <p>مرحبًا بك في لوحة إدارة منصة العلّامة.</p>
+        <div class="cards">
+          <div class="card"><span>الكورسات</span><strong>—</strong></div>
+          <div class="card"><span>الدروس</span><strong>—</strong></div>
+          <div class="card"><span>الطلاب</span><strong>—</strong></div>
+          <div class="card"><span>الاشتراكات</span><strong>—</strong></div>
+        </div>
+      </section>
+
+      <section class="section" id="courses">
+        <h2>إدارة الكورسات</h2>
+        <div class="panel">
+          <label for="courseName">اسم الكورس</label>
+          <input id="courseName" placeholder="مثال: كورس الفيزياء">
+          <label for="coursePrice">السعر</label>
+          <input id="coursePrice" type="number" min="0" placeholder="السعر">
+          <label for="courseDescription">وصف الكورس</label>
+          <textarea id="courseDescription" rows="3" placeholder="وصف الكورس"></textarea>
+          <button class="btn" data-action="course">حفظ بيانات الكورس</button>
+        </div>
+        <p>قائمة الكورسات ستظهر بعد ربط قاعدة البيانات.</p>
+      </section>
+
+      <section class="section" id="lessons">
+        <h2>إدارة الدروس</h2>
+        <div class="panel">
+          <label for="lessonCourse">معرّف الكورس</label>
+          <input id="lessonCourse" placeholder="يُحدد عند ربط الكورسات">
+          <label for="lessonTitle">اسم الدرس</label>
+          <input id="lessonTitle" placeholder="اسم الدرس">
+          <label for="lessonUrl">رابط الدرس</label>
+          <input id="lessonUrl" type="url" placeholder="رابط الفيديو أو الدرس">
+          <button class="btn" data-action="lesson">حفظ بيانات الدرس</button>
+        </div>
+        <p>إضافة الدروس وتعديلها وحذفها ستُفعّل بعد الربط.</p>
+      </section>
+
+      <section class="section" id="students">
+        <h2>إدارة الطلاب</h2>
+        <div class="panel">
+          <label for="studentEmail">بريد الطالب</label>
+          <input id="studentEmail" type="email" placeholder="البريد الإلكتروني">
+          <label for="studentAction">الإجراء المطلوب</label>
+          <select id="studentAction">
+            <option value="add">إضافة أو تسجيل طالب</option>
+            <option value="block">حظر طالب</option>
+            <option value="unblock">إلغاء حظر طالب</option>
+          </select>
+          <button class="btn" data-action="student">تنفيذ بعد الربط</button>
+        </div>
+        <p>إضافة الحسابات والحظر وإلغاء الحظر تحتاج صلاحيات خادم آمنة.</p>
+      </section>
+
+      <section class="section" id="settings">
+        <h2>إعدادات الموقع</h2>
+        <div class="panel">
+          <label for="siteName">اسم المنصة</label>
+          <input id="siteName" value="العلّامة">
+          <label for="siteMessage">رسالة الصفحة الرئيسية</label>
+          <textarea id="siteMessage" rows="4" placeholder="رسالة ترحيبية"></textarea>
+          <button class="btn" data-action="settings">حفظ الإعدادات بعد الربط</button>
+        </div>
+      </section>
+
+      <p id="status" role="status" aria-live="polite"></p>
+    </main>
+  </div>
+
+  <script>
+    const navButtons = document.querySelectorAll(".nav");
+    const sections = document.querySelectorAll(".section");
+    const status = document.getElementById("status");
+
+    navButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        navButtons.forEach(item => item.classList.remove("active"));
+        sections.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        document.getElementById(button.dataset.section).classList.add("active");
+        status.textContent = "";
+      });
+    });
+
+    document.querySelectorAll("[data-action]").forEach(button => {
+      button.addEventListener("click", () => {
+        status.style.color = "#9a5b00";
+        status.textContent =
+          "لم يتم حفظ أي تغيير. يجب ربط هذا القسم بقاعدة بيانات Supabase وتأمين صلاحيات المدير أولًا.";
+      });
+    });
+  </script>
+</body>
+</html>
